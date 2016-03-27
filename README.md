@@ -1,5 +1,7 @@
 # Android M Permission Check Library
 
+[ ![Download](https://api.bintray.com/packages/drilonreqica/maven/anroid-m-permission-check-library/images/download.svg) ](https://bintray.com/drilonreqica/maven/anroid-m-permission-check-library/_latestVersion)
+
 This tool was created by me for the sole purpose of over-simplifying the process of showing an alert to the user and then allowing the user to accept or not a single or multiple System Permissions in Android M (as specified by Google Guidelines).
 
 ## Project set-up
@@ -9,22 +11,14 @@ This tool was created by me for the sole purpose of over-simplifying the process
 If you're using a Gradle-based project, then you can add "AMPC" library as a dependency directly:
 
 ```
-compile 'com.reqica.drilon:androidmpermissioncheck:1.1.0'
-```
-To be able to use it you also have to add this snippet to your app module's build.gradle:
-```
-repositories {
-    maven {
-        url 'https://dl.bintray.com/drilonreqica/maven/'
-    }
-}
+compile 'com.reqica.drilon:androidmpermissioncheck:1.1.1'
 ```
 If you're using Maven (but not Gradle), you can add the APKlib as a dependency:
 ```
 <dependency>
   <groupId>com.reqica.drilon</groupId>
   <artifactId>androidmpermissioncheck</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -39,7 +33,7 @@ First you need to add the permission you will need in your app like always in th
 
 Then you need to create an Instance of the CreatePermissionDialog class:
 ```
-CreatePermissionDialog createPermissionDialog = new CreatePermissionDialog(currentActivity.this , currentActivity.this);
+CreatePermissionDialog createPermissionDialog = new CreatePermissionDialog(currentActivity.this);
 ```
 Replace currentActivity with the name of the main activity of your project.
 Then you need to call the method which shows the dialog for the specific permission you need:
