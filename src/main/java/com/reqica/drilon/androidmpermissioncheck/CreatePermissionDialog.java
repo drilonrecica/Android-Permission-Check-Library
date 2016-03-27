@@ -38,9 +38,9 @@ public class CreatePermissionDialog {
     Context context;
     Activity activity;
 
-    public CreatePermissionDialog (Context context , Activity activity){
+    public CreatePermissionDialog (Context context){
         this.context = context;
-        this.activity = activity;
+        activity = (Activity) context;
     }
 
     public void checkMPermission (final String permission , String dialogMessage) {
@@ -73,7 +73,37 @@ public class CreatePermissionDialog {
         }
     }
 
-
+//    public void checkMPermissions (final String [] permissions , String dialogMessage) {
+//
+//        int [] hasSpecificPermission = new int[permissions.length];
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            for (int i = 0 ; i < permissions.length ; i++){
+//                hasSpecificPermission[i] = ContextCompat.checkSelfPermission(context, permissions[i]);
+//            }
+//        }
+//        if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (!activity.shouldShowRequestPermissionRationale(permissions)) {
+//                    showMessageOKCancel(dialogMessage,
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                                        activity.requestPermissions(permissions,
+//                                                PERMISSIONS.REQUEST_CODE_ASK_PERMISSIONS);
+//                                    }
+//                                }
+//                            });
+//                    return;
+//                }
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                activity.requestPermissions(permissions,
+//                        PERMISSIONS.REQUEST_CODE_ASK_PERMISSIONS);
+//            }
+//            return;
+//        }
+//    }
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(context)
