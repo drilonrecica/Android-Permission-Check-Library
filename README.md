@@ -1,5 +1,7 @@
 # Android M Permission Check Library
 
+[ ![Download](https://api.bintray.com/packages/drilonreqica/maven/anroid-m-permission-check-library/images/download.svg) ](https://bintray.com/drilonreqica/maven/anroid-m-permission-check-library/_latestVersion)
+
 This tool was created by me for the sole purpose of over-simplifying the process of showing an alert to the user and then allowing the user to accept or not a single or multiple System Permissions in Android M (as specified by Google Guidelines).
 
 ## Project set-up
