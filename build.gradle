@@ -48,5 +48,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
 }
 
-//apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
-//apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'
+//apply from: 'https://raw.githubusercontent.com/drilonreqica/jcenter/master/installv.gradle'
+//apply from: 'https://raw.githubusercontent.com/drilonreqica/jcenter/master/bintrayv.gradle'
