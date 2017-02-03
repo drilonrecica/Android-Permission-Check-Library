@@ -25,49 +25,77 @@ package com.reqica.drilon.androidpermissionchecklibrary;
 
 */
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.widget.Toast;
+import android.text.TextUtils;
 
 public class CheckPermission {
 
 	private Context context;
+	private Activity activity;
 
-	public CheckPermission(@NonNull Context context) {
+	public CheckPermission(@NonNull final Context context) {
 		this.context = context;
+		activity = (Activity) context;
 	}
 
 	public void checkOne(@NonNull final String permission, @Nullable final String dialogMessage) {
-		if (dialogMessage != null) {
-			//TODO Display Messages in Dialog
-			showMessageDialog(dialogMessage, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialogInterface, int i) {
-					checkPermission(permission);
-				}
-			});
+		if (!TextUtils.isEmpty(dialogMessage)) {
+//			//TODO Display Messages in Dialog
+			checkPermissionWithUserDialog(permission, dialogMessage);
 		} else {
 			//TODO Display System default Messages in Dialog
 			checkPermission(permission);
 		}
 	}
 
-	public void checkMultiple(@NonNull String[] permissions, @Nullable String dialogMessages) {
+	public void checkMultiple(@NonNull final String[] permissions, @Nullable final String[] dialogMessages) {
 		if (dialogMessages != null) {
 			//TODO Display Messages in Dialogs
-			for (int i = 0; i < permissions.length; i++) {
-
-			}
 		} else {
 			//TODO Display System default Messages in Dialogs
 		}
 	}
 
-	private void checkPermission(@NonNull String permission) {
-		Toast.makeText(context, permission, Toast.LENGTH_SHORT).show();
+	public void revokePermission(@NonNull final String permission) {
+
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void checkPermission(@NonNull final String permission) {
+		int hasSpecificPermission = ContextCompat.checkSelfPermission(context, permission);
+
+		if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
+			activity.requestPermissions(new String[]{permission},
+					Permission.REQUEST_CODE_ASK_PERMISSIONS);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void checkPermissionWithUserDialog(@NonNull final String permission, @NonNull final String dialogMessage) {
+
+		int hasSpecificPermission = ContextCompat.checkSelfPermission(context, permission);
+
+		if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
+			if (!activity.shouldShowRequestPermissionRationale(permission)) {
+				showMessageDialog(dialogMessage,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								activity.requestPermissions(new String[]{permission},
+										Permission.REQUEST_CODE_ASK_PERMISSIONS);
+							}
+						});
+			}
+		}
 	}
 
 	private void showMessageDialog(@NonNull String message, @NonNull DialogInterface.OnClickListener okListener) {
