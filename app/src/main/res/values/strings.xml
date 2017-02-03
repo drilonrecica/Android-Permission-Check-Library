@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">Android Permission Check</string>
+	<string name="check_one_permission">Check One Permission</string>
+	<string name="check_multiple_permissions">Check Multiple Permissions</string>
 </resources>
