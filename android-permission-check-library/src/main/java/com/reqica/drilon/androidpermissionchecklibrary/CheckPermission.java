@@ -26,8 +26,11 @@ package com.reqica.drilon.androidpermissionchecklibrary;
 */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 public class CheckPermission {
 
@@ -37,19 +40,44 @@ public class CheckPermission {
 		this.context = context;
 	}
 
-	public void checkOne(@NonNull String permission, @Nullable String dialogMessage) {
+	public void checkOne(@NonNull final String permission, @Nullable final String dialogMessage) {
 		if (dialogMessage != null) {
 			//TODO Display Messages in Dialog
+			showMessageDialog(dialogMessage, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialogInterface, int i) {
+					checkPermission(permission);
+				}
+			});
 		} else {
 			//TODO Display System default Messages in Dialog
+			checkPermission(permission);
 		}
 	}
 
 	public void checkMultiple(@NonNull String[] permissions, @Nullable String dialogMessages) {
 		if (dialogMessages != null) {
 			//TODO Display Messages in Dialogs
+			for (int i = 0; i < permissions.length; i++) {
+
+			}
 		} else {
 			//TODO Display System default Messages in Dialogs
 		}
+	}
+
+	private void checkPermission(@NonNull String permission) {
+		Toast.makeText(context, permission, Toast.LENGTH_SHORT).show();
+	}
+
+	private void showMessageDialog(@NonNull String message, @NonNull DialogInterface.OnClickListener okListener) {
+		new AlertDialog.Builder(context)
+				.setCancelable(false)
+				.setTitle(message)
+				.setMessage(message)
+				.setPositiveButton(context.getString(android.R.string.ok), okListener)
+				.setNegativeButton(context.getString(android.R.string.cancel), null)
+				.create()
+				.show();
 	}
 }
