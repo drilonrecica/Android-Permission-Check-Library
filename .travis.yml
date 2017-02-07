@@ -26,5 +26,10 @@ deploy:
     repo: drilonreqica/Android-Permission-Check-Library
     branch: master
 
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
+
 after_success:
 - sh set_tags.sh
