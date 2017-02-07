@@ -40,6 +40,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.reqica.drilon.androidpermissionchecklibrary.Permission.REQUEST_CODE_ASK_PERMISSIONS;
+
 public class CheckPermission {
 
 	private Context context;
@@ -77,13 +82,23 @@ public class CheckPermission {
 
 		if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
 			activity.requestPermissions(new String[]{permission},
-					Permission.REQUEST_CODE_ASK_PERMISSIONS);
+					REQUEST_CODE_ASK_PERMISSIONS);
 		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
 	private void checkPermissions(@NonNull final String[] permissions) {
+		int nonGrantedPermissions = 0;
+		for (String permission : permissions) {
+			if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+				nonGrantedPermissions++;
+			}
+		}
 
+		if (nonGrantedPermissions != 0) {
+			final String[] permissionsList = getNonGrantedPermissions(permissions);
+			activity.requestPermissions(permissionsList, Permission.REQUEST_CODE_ASK_PERMISSIONS);
+		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
@@ -97,7 +112,7 @@ public class CheckPermission {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							activity.requestPermissions(new String[]{permission},
-									Permission.REQUEST_CODE_ASK_PERMISSIONS);
+									REQUEST_CODE_ASK_PERMISSIONS);
 						}
 					});
 		}
@@ -113,6 +128,18 @@ public class CheckPermission {
 						checkPermissions(permissions);
 					}
 				});
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private String[] getNonGrantedPermissions(@NonNull String[] permissions) {
+		ArrayList<String> permissionList = new ArrayList<>(Arrays.asList(permissions));
+
+		for (int i = 0; i < permissions.length; i++) {
+			if (activity.checkSelfPermission(permissions[i]) == PackageManager.PERMISSION_GRANTED) {
+				permissionList.remove(i);
+			}
+		}
+		return permissionList.toArray(new String[permissionList.size()]);
 	}
 
 	private void showMessageDialog(@NonNull String message, @NonNull DialogInterface.OnClickListener okListener) {
