@@ -1,0 +1,8 @@
+<resources>
+	<string name="app_name">Android Permission Check</string>
+	<string name="check_one_permission">Check One Permission</string>
+	<string name="check_multiple_permissions">Check Multiple Permissions</string>
+	<string name="check_with_message">Check With Message</string>
+	<string name="check_without_message">Check Without Message</string>
+	<string name="revoke_permission">Revoke Permission</string>
+</resources>
