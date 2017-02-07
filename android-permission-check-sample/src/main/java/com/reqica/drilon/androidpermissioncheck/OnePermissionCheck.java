@@ -24,7 +24,7 @@ public class OnePermissionCheck extends AppCompatActivity {
 		checkWithMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermission.checkOne(Permission.CAMERA, "TestMessage");
+				checkPermission.checkOne(Permission.CAMERA, "You need to give permission to Camera");
 			}
 		});
 
@@ -38,7 +38,7 @@ public class OnePermissionCheck extends AppCompatActivity {
 		revokePermissionBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermission.revokePermission(Permission.CAMERA);
+				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
 			}
 		});
 	}
