@@ -29,13 +29,21 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.reqica.drilon.androidpermissionchecklibrary.Permission.REQUEST_CODE_ASK_PERMISSIONS;
 
 public class CheckPermission {
 
@@ -49,24 +57,23 @@ public class CheckPermission {
 
 	public void checkOne(@NonNull final String permission, @Nullable final String dialogMessage) {
 		if (!TextUtils.isEmpty(dialogMessage)) {
-//			//TODO Display Messages in Dialog
 			checkPermissionWithUserDialog(permission, dialogMessage);
 		} else {
-			//TODO Display System default Messages in Dialog
 			checkPermission(permission);
 		}
 	}
 
-	public void checkMultiple(@NonNull final String[] permissions, @Nullable final String[] dialogMessages) {
-		if (dialogMessages != null) {
-			//TODO Display Messages in Dialogs
+	public void checkMultiple(@NonNull final String[] permissions, @Nullable final String dialogMessage) {
+		if (!TextUtils.isEmpty(dialogMessage)) {
+			checkPermissionsWithUserDialog(permissions, dialogMessage);
 		} else {
-			//TODO Display System default Messages in Dialogs
+			checkPermissions(permissions);
 		}
 	}
 
-	public void revokePermission(@NonNull final String permission) {
-
+	public void openPermissionsSettings(@NonNull String packageName) {
+		context.startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+				Uri.parse("package:" + packageName)));
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
@@ -75,37 +82,76 @@ public class CheckPermission {
 
 		if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
 			activity.requestPermissions(new String[]{permission},
-					Permission.REQUEST_CODE_ASK_PERMISSIONS);
+					REQUEST_CODE_ASK_PERMISSIONS);
 		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.M)
-	private void checkPermissionWithUserDialog(@NonNull final String permission, @NonNull final String dialogMessage) {
+	private void checkPermissions(@NonNull final String[] permissions) {
+		int nonGrantedPermissions = 0;
+		for (String permission : permissions) {
+			if (activity.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+				nonGrantedPermissions++;
+			}
+		}
 
+		if (nonGrantedPermissions != 0) {
+			final String[] permissionsList = getNonGrantedPermissions(permissions);
+			activity.requestPermissions(permissionsList, Permission.REQUEST_CODE_ASK_PERMISSIONS);
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void checkPermissionWithUserDialog(@NonNull final String permission,
+											   @NonNull final String dialogMessage) {
 		int hasSpecificPermission = ContextCompat.checkSelfPermission(context, permission);
 
 		if (hasSpecificPermission != PackageManager.PERMISSION_GRANTED) {
-			if (!activity.shouldShowRequestPermissionRationale(permission)) {
-				showMessageDialog(dialogMessage,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								activity.requestPermissions(new String[]{permission},
-										Permission.REQUEST_CODE_ASK_PERMISSIONS);
-							}
-						});
+			showMessageDialog(dialogMessage,
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							activity.requestPermissions(new String[]{permission},
+									REQUEST_CODE_ASK_PERMISSIONS);
+						}
+					});
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void checkPermissionsWithUserDialog(@NonNull final String[] permissions,
+												@NonNull final String dialogMessage) {
+		showMessageDialog(dialogMessage,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						checkPermissions(permissions);
+					}
+				});
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private String[] getNonGrantedPermissions(@NonNull String[] permissions) {
+		ArrayList<String> permissionList = new ArrayList<>(Arrays.asList(permissions));
+
+		for (int i = 0; i < permissions.length; i++) {
+			if (activity.checkSelfPermission(permissions[i]) == PackageManager.PERMISSION_GRANTED) {
+				permissionList.remove(i);
 			}
 		}
+		return permissionList.toArray(new String[permissionList.size()]);
 	}
 
 	private void showMessageDialog(@NonNull String message, @NonNull DialogInterface.OnClickListener okListener) {
 		new AlertDialog.Builder(context)
-				.setCancelable(false)
-				.setTitle(message)
+				.setCancelable(true)
+				.setTitle("")
 				.setMessage(message)
 				.setPositiveButton(context.getString(android.R.string.ok), okListener)
 				.setNegativeButton(context.getString(android.R.string.cancel), null)
 				.create()
 				.show();
 	}
+
+
 }
