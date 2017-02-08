@@ -25,7 +25,7 @@ deploy:
   skip_cleanup: true
   on:
     repo: drilonreqica/Android-Permission-Check-Library
-    branch: master
+    branch: developer
 
 env:
   global:
