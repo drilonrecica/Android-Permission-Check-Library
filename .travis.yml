@@ -1,21 +1,47 @@
 language: android
 jdk: oraclejdk8
-
+sudo: false
 android:
   components:
-    - tools
-    - platform-tools
-    - android-25
-    - build-tools-25.0.2
-    - extra-android-m2repository
-    - extra-google-m2repository
-    - extra-android-support
-    - extra-google-google_play_services
-
+  - tools
+  - platform-tools
+  - android-25
+  - build-tools-25.0.2
+  - extra-android-m2repository
+  - extra-google-m2repository
+  - extra-android-support
+  - extra-google-google_play_services
   sudo: false
-
   licenses:
-      - 'android-sdk-preview-license-.+'
-      - 'android-sdk-license-.+'
-      - 'google-gdk-license-.+'
-      - 'intel-android-extra-license.+'
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
+  - intel-android-extra-license.+
+deploy:
+  provider: releases
+  api_key:
+    secure: X+9DECY5MkqJeA8k/Wb+7yA/xPlFJ9xiogLeZUd+XdEa7DFsAXMAV5OYzfA5L+s1rFl9P7S26Q5szl8Barr3/xze42XkIooxrGBk/nQctsKJKnaS/n+rdSo0W55zzsPcYZvSPfJ1m61TFw9oFJk3UUuNxBaLN7n5LJZ6v7vPBRdpbFizYjuqPEGOWc/RalzJaAzOg2ihVN8W7s6icQJNzmyG/H8EyQTyUbfroy3KCmdRVLKWb/62LL6qiomAgrPGsx2zK+I+pmhsrRbKDbgF+p7k5MMwtNsnBlvW9UVuBMj0COW0g+9GZR1mFzpcXElI4KWtbF7tTrXnYvHu9VbG8Ot65TFTcBqLgviTSUugwrNZlbwQxUR1OGGplrfCwruHJ87O8YhoNEIVWuKQAEi0iMpdXr1Bi3Eo79bSc/Cod1kzCae+bCmp8JT3Dzy+H9B96aq6lNt/VQgiCixwKQlwHD7BpGKg9uAkTtZku2DpL3mIZsuDbJfiomfzN0UleHA1hHPLAOKCHzaYneXioz9VOAn95ATa4tU8wa7YeBeG0w68KGTPR8JYZGfkdVXhibh4+cPpaHqn3g97T8pfrdvDTLA05MqItX45mSBN236FuDzR25rzp67g7Pf/4I3SxSPygnXeA+CwoycyS/gkp4fVIR9yG6dAnET83z9ZWar7QqI=
+  file: app/build/outputs/apk/app-debug.apk
+  skip_cleanup: true
+  on:
+    repo: drilonreqica/Android-Permission-Check-Library
+    branch: master
+
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - android list target
+  - ./gradlew connectedAndroidTest
+
+after_success:
+- sh set_tags.sh
