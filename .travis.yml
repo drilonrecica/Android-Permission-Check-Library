@@ -27,7 +27,6 @@ deploy:
   overwrite: true
   on:
     repo: drilonreqica/Android-Permission-Check-Library
-    branch: develop
 
 env:
   global:
