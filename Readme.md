@@ -1,6 +1,10 @@
 # Android Permission Check Library
 
+### Status
+<br>
 [![Build Status](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library.svg?branch=develop)](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library) [ ![Download](https://api.bintray.com/packages/drilonreqica/maven/android-permission-check-library/images/download.svg) ](https://bintray.com/drilonreqica/maven/android-permission-check-library/_latestVersion)
+<br>
+#### Adding the library as depndency
 
 Add library dependency using gradle:
 ```golang
@@ -22,19 +26,36 @@ Add library dependency using ivy:
 </dependency>
 ```
 
+#### Usage
+
 Initialize Class CheckPermission:
 ```java
 CheckPermission checkPermission = new CheckPermission(context);
 ```
 
-If you want to check a single permission call:
+If you want to check and ask for a Single permission, call:
 ```java
-checkPermission.checkOne(Permission.CAMERA);
+checkPermission.checkOne(@NonNull final String permission, @Nullable final String dialogMessage)
 ```
+The 1st parameter is the actual permission, and the 2nd one is an optional Dialog Message that you can show to the user as an extra dialog, for better explanation/reason of the permission asked.
 
+<br>
 
-If you want to check multiple permissions at once call:
+If you want to check and ask for Multiple permissions at once, call:
 ```java
-checkPermission.checkMultiple(permissionArray);
+checkPermission.checkMultiple(@NonNull final String[] permissions, @Nullable final String dialogMessage)
 ```
+The 1st parameter is the actual permission, and the 2nd one is an optional Dialog Message that you can show to the user as an extra dialog, for better explanation/reason of the permissions asked.
+
+<br>
+
+If you want to go to the settings screen and see which permission are Granted and which ones are not, call:
+```java
+checkPermission.openPermissionsSettings(@NonNull String packageName) {
+```
+The parameter you need to give here is the actual root packageName of the app.
+
+#### General Knowledge
+
+To be able to check/ask for the permissions you first need to declare them in your projects AndroidManifest.xml
 
