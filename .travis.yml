@@ -33,6 +33,26 @@ before_script:
 script:
   - android list target
   - ./gradlew connectedAndroidTest
+
+deploy:
+  # Deploy the file(s) to the github release (other targets like amazon-aws or npm can be found here: http://docs.travis-ci.com/user/deployment/ )
+  provider: releases
+  # The oauth token for github (used by travis to upload the file(s) to github)
+  api_key:
+    # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
+    secure: X+9DECY5MkqJeA8k/Wb+7yA/xPlFJ9xiogLeZUd+XdEa7DFsAXMAV5OYzfA5L+s1rFl9P7S26Q5szl8Barr3/xze42XkIooxrGBk/nQctsKJKnaS/n+rdSo0W55zzsPcYZvSPfJ1m61TFw9oFJk3UUuNxBaLN7n5LJZ6v7vPBRdpbFizYjuqPEGOWc/RalzJaAzOg2ihVN8W7s6icQJNzmyG/H8EyQTyUbfroy3KCmdRVLKWb/62LL6qiomAgrPGsx2zK+I+pmhsrRbKDbgF+p7k5MMwtNsnBlvW9UVuBMj0COW0g+9GZR1mFzpcXElI4KWtbF7tTrXnYvHu9VbG8Ot65TFTcBqLgviTSUugwrNZlbwQxUR1OGGplrfCwruHJ87O8YhoNEIVWuKQAEi0iMpdXr1Bi3Eo79bSc/Cod1kzCae+bCmp8JT3Dzy+H9B96aq6lNt/VQgiCixwKQlwHD7BpGKg9uAkTtZku2DpL3mIZsuDbJfiomfzN0UleHA1hHPLAOKCHzaYneXioz9VOAn95ATa4tU8wa7YeBeG0w68KGTPR8JYZGfkdVXhibh4+cPpaHqn3g97T8pfrdvDTLA05MqItX45mSBN236FuDzR25rzp67g7Pf/4I3SxSPygnXeA+CwoycyS/gkp4fVIR9yG6dAnET83z9ZWar7QqI=
+  # Which file(s) to upload
+  file: app/build/outputs/apk/app-debug.apk
+  # do not delete the files we're trying to upload
+  skip_cleanup: true
+  # only deploy if
+  on:
+    # we are on this repo
+    repo: drilonreqica/Android-Permission-Check-Library
+    # and we are building a tag
+    tags: true
+
+
 #deploy:
 #  provider: releases
 #  api_key:
