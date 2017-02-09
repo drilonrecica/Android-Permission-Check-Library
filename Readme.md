@@ -2,9 +2,7 @@
 
 ### Status
 <br>
-[![Build Status](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library.svg?branch=develop)](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library) [ ![Download](https://api.bintray.com/packages/drilonreqica/maven/android-permission-check-library/images/download.svg) ](https://bintray.com/drilonreqica/maven/android-permission-check-library/_latestVersion)
-<br>
-[![API](https://img.shields.io/badge/API-9%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=9)
+[![Build Status](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library.svg?branch=develop)](https://travis-ci.org/drilonreqica/Android-Permission-Check-Library) [ ![Download](https://api.bintray.com/packages/drilonreqica/maven/android-permission-check-library/images/download.svg) ](https://bintray.com/drilonreqica/maven/android-permission-check-library/_latestVersion) [![API](https://img.shields.io/badge/API-9%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=9)
 #### Adding the library as depndency
 
 Add library dependency using gradle:
