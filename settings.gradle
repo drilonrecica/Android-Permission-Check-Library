@@ -1,1 +1,1 @@
-include ':android-permission-check-sample', ':android-permission-check-library'
+include ':android-permission-check-sample', ':android-permission-check-library', ':androidpermissionchecklibrarykotlin'
