@@ -2,6 +2,8 @@
 
 buildscript {
 	ext.kotlin_version = '1.0.6'
+	ext.versionCode = 5
+	ext.versionName = '1.0.5'
 	repositories {
 		jcenter()
 	}
@@ -25,4 +27,8 @@ allprojects {
 
 task clean(type: Delete) {
 	delete rootProject.buildDir
+}
+
+task('printVersion') << {
+	println "${versionName}"
 }
