@@ -2,11 +2,11 @@
 
 buildscript {
 	ext.kotlin_version = '1.0.6'
-	ext.versionCode = 6
-	ext.versionName = '1.0.6'
+	ext.versionCode = 20
+	ext.versionName = '2.0.0'
 	repositories {
 		jcenter()
-	}
+	}s
 	dependencies {
 		classpath 'com.android.tools.build:gradle:2.2.3'
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
