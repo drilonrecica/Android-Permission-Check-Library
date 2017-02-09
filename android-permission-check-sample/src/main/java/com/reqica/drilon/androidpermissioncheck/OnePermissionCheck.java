@@ -1,7 +1,7 @@
 package com.reqica.drilon.androidpermissioncheck;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -16,6 +16,8 @@ public class OnePermissionCheck extends AppCompatActivity {
 		setContentView(R.layout.activity_one_permission_check);
 
 		final CheckPermission checkPermission = new CheckPermission(this);
+		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
+				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
 
 		Button checkWithMessageBtn = (Button) findViewById(R.id.with_message_btn);
 		Button checkWithoutMessageBtn = (Button) findViewById(R.id.without_message_btn);
@@ -24,21 +26,28 @@ public class OnePermissionCheck extends AppCompatActivity {
 		checkWithMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermission.checkOne(Permission.CAMERA, "You need to give permission to Camera");
+				checkPermissionKotlin.checkOne(
+						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
+						"You need to give permission to Camera");
+//				checkPermission.checkOne(Permission.CAMERA, "You need to give permission to Camera");
 			}
 		});
 
 		checkWithoutMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermission.checkOne(Permission.CAMERA, null);
+				checkPermissionKotlin.checkOne(
+						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
+						null);
+//				checkPermission.checkOne(Permission.CAMERA, null);
 			}
 		});
 
 		revokePermissionBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
+				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
+//				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
 			}
 		});
 	}
