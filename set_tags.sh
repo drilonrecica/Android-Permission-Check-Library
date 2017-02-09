@@ -1,11 +1,11 @@
 BRANCH="master"
-RELEASE_VERSION=./gradlew -q pV
+PROJECT_VERSION="$(./gradlew -q pV)"
 
 # Are we on the right branch?
 #if [ "$TRAVIS_BRANCH" = "$BRANCH" ]; then
 
   # Is this not a Pull Request?
-  if [ "$TRAVIS_PULL_REQUEST" = false ]; then
+#  if [ "$TRAVIS_PULL_REQUEST" = false ]; then
 
     # Is this not a build which was triggered by setting a new tag?
     if [ -z "$TRAVIS_TAG" ]; then
@@ -13,14 +13,14 @@ RELEASE_VERSION=./gradlew -q pV
 
       git config --global user.email "travis@travis-ci.org"
       git config --global user.name "Travis"
-
-      # Add tag and push to master.
-#      git tag -a v${TRAVIS_BUILD_NUMBER} -m "Travis build $TRAVIS_BUILD_NUMBER pushed a tag."
-      git tag -a v"$RELEASE_VERSION" -m "Travis build $RELEASE_VERSION pushed a tag."
+#
+#      # Add tag and push to master.
+##      git tag -a v${TRAVIS_BUILD_NUMBER} -m "Travis build $TRAVIS_BUILD_NUMBER pushed a tag."
+      git tag -a v${PROJECT_VERSION} -m "Travis build $PROJECT_VERSION pushed a tag."
       git push origin --tags
       git fetch origin
-
+      echo -e $PROJECT_VERSION
       echo -e "Done magic with tags.\n"
   fi
-  fi
+#  fi
 #fi
