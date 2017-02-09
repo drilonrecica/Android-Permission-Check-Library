@@ -15,9 +15,11 @@ public class OnePermissionCheck extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_one_permission_check);
 
+		//java implementation
 		final CheckPermission checkPermission = new CheckPermission(this);
-		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
-				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
+		//kotlin implementation
+//		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
+//				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
 
 		Button checkWithMessageBtn = (Button) findViewById(R.id.with_message_btn);
 		Button checkWithoutMessageBtn = (Button) findViewById(R.id.without_message_btn);
@@ -26,28 +28,34 @@ public class OnePermissionCheck extends AppCompatActivity {
 		checkWithMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.checkOne(
-						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
-						"You need to give permission to Camera");
-//				checkPermission.checkOne(Permission.CAMERA, "You need to give permission to Camera");
+				//kotlin implementation
+//				checkPermissionKotlin.checkOne(
+//						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
+//						"You need to give permission to Camera");
+				//java implementation
+				checkPermission.checkOne(Permission.CAMERA, "You need to give permission to Camera");
 			}
 		});
 
 		checkWithoutMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.checkOne(
-						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
-						null);
-//				checkPermission.checkOne(Permission.CAMERA, null);
+				//kotlin implementation
+//				checkPermissionKotlin.checkOne(
+//						com.reqica.drilon.androidpermissionchecklibrarykotlin.Permission.INSTANCE.getCAMERA(),
+//						null);
+				//java implementation
+				checkPermission.checkOne(Permission.CAMERA, null);
 			}
 		});
 
 		revokePermissionBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
-//				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
+				//kotlin implementation
+//				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
+				//java implementation
+				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
 			}
 		});
 	}

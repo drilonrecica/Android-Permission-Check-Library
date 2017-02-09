@@ -15,9 +15,11 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multiple_permission_check);
 
+		//java implementation
 		final CheckPermission checkPermission = new CheckPermission(this);
-		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
-				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
+		//kotlin implementation
+//		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
+//				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
 
 		Button checkWithMessageBtn = (Button) findViewById(R.id.with_message_btn);
 		Button checkWithoutMessageBtn = (Button) findViewById(R.id.without_message_btn);
@@ -30,24 +32,30 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		checkWithMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.checkMultiple(permissions, "You need to give permissions for usage");
-//				checkPermission.checkMultiple(permissions, "You need to give permissions for usage");
+				//kotlin implementation
+//				checkPermissionKotlin.checkMultiple(permissions, "You need to give permissions for usage");
+				//java implementation
+				checkPermission.checkMultiple(permissions, "You need to give permissions for usage");
 			}
 		});
 
 		checkWithoutMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.checkMultiple(permissions, null);
-//				checkPermission.checkMultiple(permissions, null);
+				//kotlin implementation
+//				checkPermissionKotlin.checkMultiple(permissions, null);
+				//java implementation
+				checkPermission.checkMultiple(permissions, null);
 			}
 		});
 
 		revokePermissionBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
-//				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
+				//kotlin implementation
+//				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
+				//java implementation
+				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
 			}
 		});
 	}
