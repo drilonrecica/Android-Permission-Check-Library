@@ -1,10 +1,10 @@
 BRANCH="master"
 
-# Are we on the right branch?
-if [ "$TRAVIS_BRANCH" = "$BRANCH" ]; then
-
-  # Is this not a Pull Request?
-  if [ "$TRAVIS_PULL_REQUEST" = false ]; then
+## Are we on the right branch?
+#if [ "$TRAVIS_BRANCH" = "$BRANCH" ]; then
+#
+#  # Is this not a Pull Request?
+#  if [ "$TRAVIS_PULL_REQUEST" = false ]; then
 
     # Is this not a build which was triggered by setting a new tag?
     if [ -z "$TRAVIS_TAG" ]; then
@@ -19,6 +19,6 @@ if [ "$TRAVIS_BRANCH" = "$BRANCH" ]; then
       git fetch origin
 
       echo -e "Done magic with tags.\n"
-  fi
-  fi
+#  fi
+#  fi
 fi
