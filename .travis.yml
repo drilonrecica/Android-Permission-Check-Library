@@ -17,61 +17,35 @@ android:
   - android-sdk-license-.+
   - google-gdk-license-.+
   - intel-android-extra-license.+
-
 env:
   global:
-   # install timeout in minutes (2 minutes by default)
-    - ADB_INSTALL_TIMEOUT=8
-
-# Emulator Management: Create, Start and Wait
+  - ADB_INSTALL_TIMEOUT=8
 before_script:
-  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
+- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 script:
-  - android list target
-  - ./gradlew connectedAndroidTest
-
+- android list target
+- ./gradlew connectedAndroidTest
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
 deploy:
-  # Deploy the file(s) to the github release (other targets like amazon-aws or npm can be found here: http://docs.travis-ci.com/user/deployment/ )
   provider: releases
-  # The oauth token for github (used by travis to upload the file(s) to github)
   api_key:
-    # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
-    secure: X+9DECY5MkqJeA8k/Wb+7yA/xPlFJ9xiogLeZUd+XdEa7DFsAXMAV5OYzfA5L+s1rFl9P7S26Q5szl8Barr3/xze42XkIooxrGBk/nQctsKJKnaS/n+rdSo0W55zzsPcYZvSPfJ1m61TFw9oFJk3UUuNxBaLN7n5LJZ6v7vPBRdpbFizYjuqPEGOWc/RalzJaAzOg2ihVN8W7s6icQJNzmyG/H8EyQTyUbfroy3KCmdRVLKWb/62LL6qiomAgrPGsx2zK+I+pmhsrRbKDbgF+p7k5MMwtNsnBlvW9UVuBMj0COW0g+9GZR1mFzpcXElI4KWtbF7tTrXnYvHu9VbG8Ot65TFTcBqLgviTSUugwrNZlbwQxUR1OGGplrfCwruHJ87O8YhoNEIVWuKQAEi0iMpdXr1Bi3Eo79bSc/Cod1kzCae+bCmp8JT3Dzy+H9B96aq6lNt/VQgiCixwKQlwHD7BpGKg9uAkTtZku2DpL3mIZsuDbJfiomfzN0UleHA1hHPLAOKCHzaYneXioz9VOAn95ATa4tU8wa7YeBeG0w68KGTPR8JYZGfkdVXhibh4+cPpaHqn3g97T8pfrdvDTLA05MqItX45mSBN236FuDzR25rzp67g7Pf/4I3SxSPygnXeA+CwoycyS/gkp4fVIR9yG6dAnET83z9ZWar7QqI=
-  # Which file(s) to upload
-  file: app/build/outputs/apk/app-debug.apk
-  # do not delete the files we're trying to upload
+    secure: R/dS4ZItycLWILoPidUm8lk0SR9ru4GMHpm3N2xdYkp2+7or3mO7Twu18a1SbPkPAaWT/mqDheEYzDYpufb3cLCG0rR368D/qqXg1/OhZ0Cwna0f1JglCQexi0WXFZeWUHP6A/iki1t+ahPtRMPxGWWUm1ZMyAhjxY2Abi/xcpyuLH6zjk5bGjtnaI8RAjfzlC4lExEBWX82nnsYJmQrt3V+5fUIu/IQGypSsyW2fghc5DJXiweRjIgnGizFqG4KweXvnZV1fcy79S2YAcVHirROZlDj5+LvRRNZKwwv18ZJm/IKH3cccAxIADTNp8tWlOAoRT8zplLC4mdkD+JSLOK7E+yPO7nKZ8Mtw7n+kQL2/jQixhh5GJfvYXw14vBr6PySRQt+Dq4zIUHMB+lVsi+cpqAlz0T9KbUcoVG/+8B6b955yb516fVe68+k/sM2zTRUZU3LrInB1cMirBq2yifRGeQzDVA18wF8rksCH5fyiSIElAC/URDCGrGdlpzIONrf3YnyRKh4vjQIz35uELd28WZAnvLExvcvGhD9teVWNZiiPVVBDgDFVZ5cEKdZzB0N26gnw+s8C/vsqE0YlqVqilCxXusGt71eKyIc79uB3rbjsfngWXP6yQasMvFJX83lQ3NTqadxSxdHyPb1ewTZP+hsKiBH+Sy/MSTYX78=
+  file: android-permission-check-sample/build/outputs/apk/android-permission-check-sample-debug.apk
   skip_cleanup: true
-  # only deploy if
+  file_glob: true
+  overwrite: true
   on:
-    # we are on this repo
     repo: drilonreqica/Android-Permission-Check-Library
-    # and we are building a tag
-    tags: true
 
-
-#deploy:
-#  provider: releases
-#  api_key:
-#    secure: X+9DECY5MkqJeA8k/Wb+7yA/xPlFJ9xiogLeZUd+XdEa7DFsAXMAV5OYzfA5L+s1rFl9P7S26Q5szl8Barr3/xze42XkIooxrGBk/nQctsKJKnaS/n+rdSo0W55zzsPcYZvSPfJ1m61TFw9oFJk3UUuNxBaLN7n5LJZ6v7vPBRdpbFizYjuqPEGOWc/RalzJaAzOg2ihVN8W7s6icQJNzmyG/H8EyQTyUbfroy3KCmdRVLKWb/62LL6qiomAgrPGsx2zK+I+pmhsrRbKDbgF+p7k5MMwtNsnBlvW9UVuBMj0COW0g+9GZR1mFzpcXElI4KWtbF7tTrXnYvHu9VbG8Ot65TFTcBqLgviTSUugwrNZlbwQxUR1OGGplrfCwruHJ87O8YhoNEIVWuKQAEi0iMpdXr1Bi3Eo79bSc/Cod1kzCae+bCmp8JT3Dzy+H9B96aq6lNt/VQgiCixwKQlwHD7BpGKg9uAkTtZku2DpL3mIZsuDbJfiomfzN0UleHA1hHPLAOKCHzaYneXioz9VOAn95ATa4tU8wa7YeBeG0w68KGTPR8JYZGfkdVXhibh4+cPpaHqn3g97T8pfrdvDTLA05MqItX45mSBN236FuDzR25rzp67g7Pf/4I3SxSPygnXeA+CwoycyS/gkp4fVIR9yG6dAnET83z9ZWar7QqI=
-#  file: app/build/outputs/apk/app-debug.apk
-#  skip_cleanup: true
-#  file_glob: true
-#  overwrite: true
-#  on:
-#    repo: drilonreqica/Android-Permission-Check-Library
-#
-#after_success:
-#- sh set_tags.sh
+after_success:
+- sh set_tags.sh
