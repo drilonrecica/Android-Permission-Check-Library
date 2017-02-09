@@ -17,6 +17,22 @@ android:
   - android-sdk-license-.+
   - google-gdk-license-.+
   - intel-android-extra-license.+
+
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - android list target
+  - ./gradlew connectedAndroidTest
 #deploy:
 #  provider: releases
 #  api_key:
@@ -27,22 +43,6 @@ android:
 #  overwrite: true
 #  on:
 #    repo: drilonreqica/Android-Permission-Check-Library
-#
-#env:
-#  global:
-#   # install timeout in minutes (2 minutes by default)
-#    - ADB_INSTALL_TIMEOUT=8
-#
-## Emulator Management: Create, Start and Wait
-#before_script:
-#  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-#  - emulator -avd test -no-skin -no-audio -no-window &
-#  - android-wait-for-emulator
-#  - adb shell input keyevent 82 &
-#
-#script:
-#  - android list target
-#  - ./gradlew connectedAndroidTest
 #
 #after_success:
 #- sh set_tags.sh
