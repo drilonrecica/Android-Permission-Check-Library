@@ -15,7 +15,11 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_multiple_permission_check);
 
+		//java implementation
 		final CheckPermission checkPermission = new CheckPermission(this);
+		//kotlin implementation
+//		final com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission checkPermissionKotlin =
+//				new com.reqica.drilon.androidpermissionchecklibrarykotlin.CheckPermission(this);
 
 		Button checkWithMessageBtn = (Button) findViewById(R.id.with_message_btn);
 		Button checkWithoutMessageBtn = (Button) findViewById(R.id.without_message_btn);
@@ -28,6 +32,9 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		checkWithMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//kotlin implementation
+//				checkPermissionKotlin.checkMultiple(permissions, "You need to give permissions for usage");
+				//java implementation
 				checkPermission.checkMultiple(permissions, "You need to give permissions for usage");
 			}
 		});
@@ -35,6 +42,9 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		checkWithoutMessageBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//kotlin implementation
+//				checkPermissionKotlin.checkMultiple(permissions, null);
+				//java implementation
 				checkPermission.checkMultiple(permissions, null);
 			}
 		});
@@ -42,6 +52,9 @@ public class MultiplePermissionCheck extends AppCompatActivity {
 		revokePermissionBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				//kotlin implementation
+//				checkPermissionKotlin.openPermissionsSettings(getApplicationContext().getPackageName());
+				//java implementation
 				checkPermission.openPermissionsSettings(getApplicationContext().getPackageName());
 			}
 		});
